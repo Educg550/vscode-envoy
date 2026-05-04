@@ -19,7 +19,8 @@
       {
         "command": "enclosed.shareFile",
         "title": "Share securely with Enclosed",
-        "category": "Enclosed"
+        "category": "Enclosed",
+        "icon": "$(shield)"
       },
       {
         "command": "enclosed.openNote",
@@ -32,6 +33,13 @@
         {
           "command": "enclosed.shareFile",
           "when": "resourceExtname == .env || resourceFilename =~ /\\.env/"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "enclosed.shareFile",
+          "when": "resourceExtname == .env || resourceFilename =~ /\\.env/",
+          "group": "navigation"
         }
       ]
     },
