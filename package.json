@@ -1,23 +1,60 @@
 {
   "name": "envoy",
   "displayName": "Envoy",
-  "description": "Send your .env securely, like a diplomatic envoy",
+  "description": "Share .env files securely via Enclosed — end-to-end encrypted, ephemeral links inside VS Code",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.118.0"
   },
-  "categories": [
-    "Other"
-  ],
+  "categories": ["Other"],
+  "keywords": ["env", "secrets", "encrypted", "sharing", "enclosed"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Educg550/vscode-envoy.git"
+  },
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "envoy.helloWorld",
-        "title": "Hello World"
+        "command": "enclosed.shareFile",
+        "title": "Share securely with Enclosed",
+        "category": "Enclosed"
+      },
+      {
+        "command": "enclosed.openNote",
+        "title": "Open Enclosed Note",
+        "category": "Enclosed"
       }
-    ]
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "enclosed.shareFile",
+          "when": "resourceExtname == .env || resourceFilename =~ /\\.env/"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Enclosed",
+      "properties": {
+        "enclosed.instanceUrl": {
+          "type": "string",
+          "default": "https://enclosed.cc",
+          "description": "URL of the Enclosed instance to use"
+        },
+        "enclosed.defaultTtl": {
+          "type": "number",
+          "default": 86400,
+          "description": "Default TTL in seconds for new notes"
+        },
+        "enclosed.defaultDeleteAfterReading": {
+          "type": "boolean",
+          "default": true,
+          "description": "Delete note after first read by default"
+        }
+      }
+    }
   },
   "scripts": {
     "compile": "npm run check-types && node esbuild.js",
