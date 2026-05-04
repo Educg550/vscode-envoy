@@ -1,0 +1,13 @@
+.vscode/**
+.vscode-test/**
+src/**
+.gitignore
+esbuild.js
+vitest.config.ts
+tsconfig.json
+**/*.map
+**/*.ts
+!dist/**
+node_modules/**
+docs/**
+BRAINSTORMING.md
