@@ -7,7 +7,9 @@ const watch = process.argv.includes('--watch');
 const esbuildProblemMatcherPlugin = {
   name: 'esbuild-problem-matcher',
   setup(build) {
-    build.onStart(() => console.log('[watch] build started'));
+    build.onStart(() => {
+      if (watch) console.log('[watch] build started');
+    });
     build.onEnd(result => {
       for (const { text, location } of result.errors) {
         console.error(`✘ [ERROR] ${text}`);
@@ -15,7 +17,7 @@ const esbuildProblemMatcherPlugin = {
           console.error(`    ${location.file}:${location.line}:${location.column}:`);
         }
       }
-      console.log('[watch] build finished');
+      if (watch) console.log('[watch] build finished');
     });
   },
 };
