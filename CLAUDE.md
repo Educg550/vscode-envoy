@@ -52,18 +52,53 @@ bd close <id>         # Complete work
 
 ## Build & Test
 
-_Add your build and test commands here_
-
 ```bash
-# Example:
-# npm install
-# npm test
+npm install          # install dependencies
+npm run compile      # TypeScript → JS via esbuild (watch: npm run watch)
+npm run lint         # ESLint with @typescript-eslint
+npm test             # Vitest unit tests (crypto round-trips, API client)
+npm run package      # vsce package — produces .vsix for local install/publish
 ```
+
+Run the extension locally: press **F5** in VS Code to launch the Extension Development Host.
 
 ## Architecture Overview
 
-_Add a brief overview of your project architecture_
+VS Code extension (TypeScript) that wraps the [Enclosed](https://github.com/CorentinTh/enclosed) API for end-to-end encrypted credential sharing without leaving the editor.
+
+```
+src/
+├── extension.ts          # Entry point — registers all commands
+├── commands/
+│   ├── shareFile.ts      # "Share securely" — right-click on .env in Explorer
+│   └── openNote.ts       # "Open Enclosed Note" — Command Palette, paste URL
+├── crypto/
+│   ├── keys.ts           # Random baseKey via crypto.getRandomValues
+│   ├── encrypt.ts        # PBKDF2(baseKey+password) → AES-GCM 256 encrypt
+│   └── decrypt.ts        # PBKDF2(baseKey+password) → AES-GCM 256 decrypt
+├── api/
+│   └── enclosedClient.ts # POST /api/notes (create) + GET /api/notes/:id (fetch)
+├── ui/
+│   ├── sharePanel.ts     # Quick Pick for TTL / password / delete-after-read
+│   └── receivePanel.ts   # Input Box for URL + optional password prompt
+└── config/
+    └── settings.ts       # Reads enclosed.instanceUrl, defaultTtl, deleteAfterReading
+```
+
+**Data flow (send):** file content → encrypt (AES-GCM) → POST to Enclosed API → assemble link `{instanceUrl}/#noteId/baseKey` → copy to clipboard.
+
+**Data flow (receive):** paste link → extract noteId + baseKey from URL fragment → GET encrypted note → PBKDF2 derive key → AES-GCM decrypt locally → open untitled editor.
+
+The `baseKey` lives only in the URL fragment — never sent to the server. All crypto uses `crypto.subtle` (Web Crypto API, no external deps).
 
 ## Conventions & Patterns
 
-_Add your project-specific conventions here_
+- **No external crypto deps** — use only `crypto.subtle` natively available in the VS Code Extension Host (Node 18+).
+- **No external HTTP deps** — use native `fetch` (Node 18+).
+- **baseKey is never logged** — not in console, not in error messages, not in telemetry.
+- **Passwords never stored** — always via `vscode.window.showInputBox({ password: true })`, never cached or persisted.
+- **Crypto params must match Enclosed app-client exactly** — before changing any PBKDF2/AES param (salt, iterations, IV length), verify against `packages/app-client` in the Enclosed source. Interoperability with the web app depends on this.
+- **Validate instanceUrl before fetch** — check it's a valid URL and matches the configured instance to prevent SSRF.
+- **Untitled documents for decrypted content** — never auto-save; the user explicitly saves if they want persistence.
+- **TypeScript strict mode** — `"strict": true` in tsconfig.json.
+- **Tests co-located** — `src/crypto/*.test.ts` alongside implementation files.
