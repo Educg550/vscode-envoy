@@ -1,7 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it } from 'vitest';
 
-describe('crypto/keys (smoke test)', () => {
-  it('placeholder passes — remove when real implementation exists', () => {
-    expect(true).toBe(true);
-  });
+describe('crypto/keys', () => {
+  it.todo('generateBaseKey returns a 32-byte base64url string');
+  it.todo('two calls return different keys');
 });
