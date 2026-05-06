@@ -1,3 +1,6 @@
+import { bufToBase64Url } from './codec';
+
 export function generateBaseKey(): string {
-  throw new Error('not yet implemented');
+  const buf = crypto.getRandomValues(new Uint8Array(32));
+  return bufToBase64Url(buf);
 }
