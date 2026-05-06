@@ -112,9 +112,7 @@ export class EnclosedClient {
     try {
       const body = (await response.json()) as { error?: { code?: string } };
       code = body?.error?.code;
-    } catch {
-      // ignore JSON parse errors
-    }
+    } catch {}
 
     const message = `Request failed with status ${response.status}${code ? `: ${code}` : ''}`;
 

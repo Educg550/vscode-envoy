@@ -63,13 +63,9 @@ describe('EnclosedClient', () => {
     it('throws EnclosedApiError with statusCode 0 on network error', async () => {
       vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Network failure'));
 
-      await expect(
-        client.createNote({ encryptedPayload: 'iv:ct', deleteAfterReading: false }),
-      ).rejects.toMatchObject({ statusCode: 0 });
-
-      await expect(
-        client.createNote({ encryptedPayload: 'iv:ct', deleteAfterReading: false }),
-      ).rejects.toBeInstanceOf(EnclosedApiError);
+      const promise = client.createNote({ encryptedPayload: 'iv:ct', deleteAfterReading: false });
+      await expect(promise).rejects.toBeInstanceOf(EnclosedApiError);
+      await expect(promise).rejects.toMatchObject({ statusCode: 0 });
     });
 
     it('throws PayloadTooLargeError on 413', async () => {
