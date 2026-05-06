@@ -1,6 +1,7 @@
 node_modules
 dist/
 out/
+docs/
 
 # Beads / Dolt files (added by bd init)
 .dolt/
