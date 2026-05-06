@@ -25,4 +25,10 @@ describe('crypto/codec', () => {
       expect(base64UrlToBuf(encoded)).toEqual(buf);
     }
   });
+
+  it('handles large buffers without throwing', () => {
+    const buf = new Uint8Array(200_000).fill(0xff);
+    const encoded = bufToBase64Url(buf);
+    expect(base64UrlToBuf(encoded)).toEqual(buf);
+  });
 });

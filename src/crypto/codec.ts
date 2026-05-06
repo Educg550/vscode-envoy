@@ -1,5 +1,10 @@
 export function bufToBase64Url(buf: Uint8Array): string {
-  return btoa(String.fromCharCode.apply(null, buf as unknown as number[]))
+  let binary = '';
+  const chunkSize = 0x8000;
+  for (let i = 0; i < buf.length; i += chunkSize) {
+    binary += String.fromCharCode(...buf.subarray(i, i + chunkSize));
+  }
+  return btoa(binary)
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=/g, '');
