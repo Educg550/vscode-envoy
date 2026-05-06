@@ -5,8 +5,13 @@ export async function decryptContent(
   baseKey: string,
   password: string,
 ): Promise<string> {
-  const [ivStr, ciphertextStr] = encryptedPayload.split(':');
-  if (!ivStr || !ciphertextStr) {
+  const colonIndex = encryptedPayload.indexOf(':');
+  if (colonIndex === -1) {
+    throw new Error('Invalid encrypted payload format');
+  }
+  const ivStr = encryptedPayload.slice(0, colonIndex);
+  const ciphertextStr = encryptedPayload.slice(colonIndex + 1);
+  if (!ivStr || !ciphertextStr || ciphertextStr.includes(':')) {
     throw new Error('Invalid encrypted payload format');
   }
 
