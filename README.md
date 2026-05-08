@@ -1,73 +1,59 @@
 # Envoy
 
-## Send your .env securely, like a diplomatic envoy
+**Share `.env` files securely, no browser, no copy-paste.**
 
-This is the README for your extension "envoy". After writing up a brief description, we recommend including the following sections.
+Envoy encrypts your credentials end-to-end and turns them into a one-time link,
+all without leaving VS Code.
 
-## Features
+![Envoy sender demo](images/demo-sender.gif)
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## How it works
 
-For example if there is an image subfolder under your extension project workspace:
+**Sender** (you):
+1. Right-click any `.env` file in the Explorer
+2. Pick expiration time and an optional password
+3. An encrypted link is copied to your clipboard, ready to share
 
-\!\[feature X\]\(images/feature-x.png\)
+**Receiver** (your teammate):
+1. Open the Command Palette, run **Open Enclosed Note**
+2. Paste the link, enter the password if prompted
+3. The decrypted content opens as an untitled file, never auto-saved
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+> No Envoy? No problem, the link also works in any browser at [enclosed.cc](https://enclosed.cc).
 
-## Requirements
+## Security
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- The encryption key lives only in the link fragment, it is never sent to the server
+- **Share the link through a private channel** (DM, encrypted chat), never in a public thread
+- Notes are ephemeral: by default they self-destruct after the first read
+- No account required, no data retained beyond the note's TTL
 
-## Extension Settings
+Envoy uses AES-256-GCM encryption with PBKDF2 key derivation, the same parameters
+as the Enclosed web app.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Configuration
 
-For example:
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `enclosed.instanceUrl` | `https://enclosed.cc` | Enclosed instance to use |
+| `enclosed.defaultTtl` | `86400` (1 day) | Default link expiration, in seconds |
+| `enclosed.defaultDeleteAfterReading` | `true` | Destroy note after first read |
 
-This extension contributes the following settings:
+Access via **Settings → Extensions → Enclosed** or add to your `settings.json`.
 
-- `myExtension.enable`: Enable/disable this extension.
-- `myExtension.thing`: Set to `blah` to do something.
+## Self-hosting
 
-## Known Issues
+To point Envoy to your own Enclosed instance:
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+1. Open **Settings → Extensions → Enclosed → Instance URL**
+2. Set it to your instance, e.g. `https://notes.mycompany.com`
 
-## Release Notes
+For self-hosting Enclosed itself, see the [Enclosed documentation](https://github.com/CorentinTh/enclosed).
 
-Users appreciate release notes as you update your extension.
+## About
 
-### 1.0.0
+Envoy uses [Enclosed](https://enclosed.cc) as its backend by default.
+Enclosed is an independent open-source project by [@CorentinTh](https://github.com/CorentinTh),
+not affiliated with this extension.
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-- [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-- Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-- Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-- Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Icon credits: see [ATTRIBUTION.md](ATTRIBUTION.md).
