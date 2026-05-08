@@ -7,41 +7,66 @@ vi.mock('vscode', () => ({
 import { parseNoteUrl } from './openNote';
 
 describe('parseNoteUrl', () => {
-  it('parses a full Enclosed URL', () => {
-    expect(parseNoteUrl('https://enclosed.cc/#abc123/xyz789')).toEqual({
+  it('parses a standard Enclosed URL (no flags)', () => {
+    expect(parseNoteUrl('https://enclosed.cc/abc123#xyz789')).toEqual({
+      noteId: 'abc123',
+      baseKey: 'xyz789',
+    });
+  });
+
+  it('parses a password-protected URL (pw: prefix)', () => {
+    expect(parseNoteUrl('https://enclosed.cc/abc123#pw:xyz789')).toEqual({
+      noteId: 'abc123',
+      baseKey: 'xyz789',
+    });
+  });
+
+  it('parses a delete-after-reading URL (dar: prefix)', () => {
+    expect(parseNoteUrl('https://enclosed.cc/abc123#dar:xyz789')).toEqual({
+      noteId: 'abc123',
+      baseKey: 'xyz789',
+    });
+  });
+
+  it('parses a URL with both pw: and dar: prefixes', () => {
+    expect(parseNoteUrl('https://enclosed.cc/abc123#pw:dar:xyz789')).toEqual({
       noteId: 'abc123',
       baseKey: 'xyz789',
     });
   });
 
   it('parses a URL with a custom instance', () => {
-    expect(parseNoteUrl('https://myinstance.example.com/#abc123/xyz789')).toEqual({
+    expect(parseNoteUrl('https://myinstance.example.com/abc123#xyz789')).toEqual({
       noteId: 'abc123',
       baseKey: 'xyz789',
     });
   });
 
-  it('parses a fragment-only string', () => {
-    expect(parseNoteUrl('#abc123/xyz789')).toEqual({ noteId: 'abc123', baseKey: 'xyz789' });
+  it('parses a real-world Enclosed URL', () => {
+    const result = parseNoteUrl('https://enclosed.cc/01kr4jxqyphgazrb0798w0s4xg#m774Mgqp---SY7Vx1L4MG5wto7It1v_kQLknwpob6l0');
+    expect(result).toEqual({
+      noteId: '01kr4jxqyphgazrb0798w0s4xg',
+      baseKey: 'm774Mgqp---SY7Vx1L4MG5wto7It1v_kQLknwpob6l0',
+    });
   });
 
-  it('parses noteId/baseKey without a leading hash', () => {
-    expect(parseNoteUrl('abc123/xyz789')).toEqual({ noteId: 'abc123', baseKey: 'xyz789' });
+  it('returns null when noteId is missing from path', () => {
+    expect(parseNoteUrl('https://enclosed.cc/#xyz789')).toBeNull();
   });
 
-  it('returns null when there is no slash separator', () => {
-    expect(parseNoteUrl('https://enclosed.cc/#abc123')).toBeNull();
-  });
-
-  it('returns null when baseKey contains a slash (extra path segment)', () => {
-    expect(parseNoteUrl('https://enclosed.cc/#abc123/xyz789/extra')).toBeNull();
+  it('returns null when fragment is missing', () => {
+    expect(parseNoteUrl('https://enclosed.cc/abc123')).toBeNull();
   });
 
   it('returns null for an empty string', () => {
     expect(parseNoteUrl('')).toBeNull();
   });
 
-  it('returns null when noteId is empty', () => {
-    expect(parseNoteUrl('/xyz789')).toBeNull();
+  it('returns null for a non-URL string', () => {
+    expect(parseNoteUrl('not a url')).toBeNull();
+  });
+
+  it('returns null for an unknown fragment prefix', () => {
+    expect(parseNoteUrl('https://enclosed.cc/abc123#unknown:xyz789')).toBeNull();
   });
 });

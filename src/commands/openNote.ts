@@ -1,24 +1,25 @@
 import * as vscode from 'vscode';
 
 export function parseNoteUrl(raw: string): { noteId: string; baseKey: string } | null {
-  const trimmed = raw.trim();
-  let fragment: string;
-
+  let url: URL;
   try {
-    const url = new URL(trimmed);
-    fragment = url.hash;
+    url = new URL(raw.trim());
   } catch {
-    fragment = trimmed;
+    return null;
   }
 
-  const stripped = fragment.replace(/^[#/]+/, '');
-  const slashIndex = stripped.indexOf('/');
-  if (slashIndex === -1) return null;
+  const noteId = url.pathname.split('/').filter(Boolean).pop();
+  if (!noteId) return null;
 
-  const noteId = stripped.slice(0, slashIndex);
-  const baseKey = stripped.slice(slashIndex + 1);
+  const hashFragment = url.hash.replace(/^#/, '');
+  if (!hashFragment) return null;
 
-  if (!noteId || !baseKey || baseKey.includes('/')) return null;
+  const segments = hashFragment.split(':');
+  const baseKey = segments.pop();
+  if (!baseKey) return null;
+
+  const validPrefixes = new Set(['pw', 'dar']);
+  if (segments.some(s => !validPrefixes.has(s))) return null;
 
   return { noteId, baseKey };
 }
