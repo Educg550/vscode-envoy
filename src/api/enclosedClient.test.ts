@@ -1,11 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import {
-  EnclosedApiError,
-  EnclosedClient,
-  NoteNotFoundError,
-  PayloadTooLargeError,
-  RateLimitError,
-} from './enclosedClient';
+import { EnclosedApiError, NoteNotFoundError, PayloadTooLargeError, RateLimitError } from './errors';
+import { EnclosedClient } from './enclosedClient';
 
 const INSTANCE_URL = 'https://enclosed.example.com';
 

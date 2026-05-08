@@ -1,46 +1,5 @@
-export interface CreateNotePayload {
-  encryptedPayload: string;
-  ttlInSeconds?: number;
-  deleteAfterReading: boolean;
-}
-
-export interface FetchNoteResult {
-  encryptedPayload: string;
-  encryptionAlgorithm: string;
-  serializationFormat: string;
-}
-
-export class EnclosedApiError extends Error {
-  constructor(
-    message: string,
-    public readonly statusCode: number,
-    public readonly code?: string,
-  ) {
-    super(message);
-    this.name = 'EnclosedApiError';
-  }
-}
-
-export class NoteNotFoundError extends EnclosedApiError {
-  constructor(message: string, code?: string) {
-    super(message, 404, code);
-    this.name = 'NoteNotFoundError';
-  }
-}
-
-export class RateLimitError extends EnclosedApiError {
-  constructor(message: string, code?: string) {
-    super(message, 429, code);
-    this.name = 'RateLimitError';
-  }
-}
-
-export class PayloadTooLargeError extends EnclosedApiError {
-  constructor(message: string, code?: string) {
-    super(message, 413, code);
-    this.name = 'PayloadTooLargeError';
-  }
-}
+import { EnclosedApiError, NoteNotFoundError, PayloadTooLargeError, RateLimitError } from './errors';
+import { CreateNotePayload, FetchNoteResult } from './types';
 
 export class EnclosedClient {
   constructor(private readonly instanceUrl: string) {}
