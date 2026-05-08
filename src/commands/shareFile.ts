@@ -44,9 +44,16 @@ export async function shareFileCommand(uri?: vscode.Uri): Promise<void> {
   if (!options) {return;}
 
   const baseKey = generateBaseKey();
-  const { encryptedPayload } = await encryptContent(content, baseKey, options.password);
+  let encryptedPayload: string;
+  try {
+    ({ encryptedPayload } = await encryptContent(content, baseKey, options.password));
+  } catch {
+    vscode.window.showErrorMessage('An unexpected error occurred while encrypting.');
+    return;
+  }
 
-  const client = new EnclosedClient(settings.instanceUrl);
+  const baseUrl = settings.instanceUrl.replace(/\/+$/, '');
+  const client = new EnclosedClient(baseUrl);
   let noteId: string;
   try {
     noteId = await client.createNote({
@@ -64,7 +71,7 @@ export async function shareFileCommand(uri?: vscode.Uri): Promise<void> {
     options.deleteAfterReading && 'dar',
   ].filter(Boolean);
   const hashFragment = [...flags, baseKey].join(':');
-  const link = `${settings.instanceUrl}/${noteId}#${hashFragment}`;
+  const link = `${baseUrl}/${encodeURIComponent(noteId)}#${hashFragment}`;
 
   await vscode.env.clipboard.writeText(link);
   vscode.window.showInformationMessage('Enclosed link copied to clipboard.');
