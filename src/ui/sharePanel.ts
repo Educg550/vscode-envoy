@@ -26,14 +26,14 @@ export async function promptShareOptions(
     title: 'Share with Enclosed',
     placeHolder: 'Select expiration time',
   });
-  if (!picked) return undefined;
+  if (!picked) {return undefined;}
 
   const passwordInput = await vscode.window.showInputBox({
     title: 'Share with Enclosed',
     prompt: 'Password (leave empty for no password)',
     password: true,
   });
-  if (passwordInput === undefined) return undefined;
+  if (passwordInput === undefined) {return undefined;}
 
   return {
     ttl: picked.seconds,

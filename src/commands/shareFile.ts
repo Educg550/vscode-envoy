@@ -41,7 +41,7 @@ export async function shareFileCommand(uri?: vscode.Uri): Promise<void> {
   }
 
   const options = await promptShareOptions(settings.defaultTtl, settings.defaultDeleteAfterReading);
-  if (!options) return;
+  if (!options) {return;}
 
   const baseKey = generateBaseKey();
   const { encryptedPayload } = await encryptContent(content, baseKey, options.password);
@@ -71,9 +71,9 @@ export async function shareFileCommand(uri?: vscode.Uri): Promise<void> {
 }
 
 function shareErrorMessage(err: unknown): string {
-  if (err instanceof PayloadTooLargeError) return 'File is too large to share via Enclosed.';
-  if (err instanceof RateLimitError) return 'Too many requests. Please wait before sharing again.';
-  if (err instanceof NoteNotFoundError) return 'Unexpected error: note not found after creation.';
-  if (err instanceof EnclosedApiError) return `Enclosed API error: ${err.message}`;
+  if (err instanceof PayloadTooLargeError) {return 'File is too large to share via Enclosed.';}
+  if (err instanceof RateLimitError) {return 'Too many requests. Please wait before sharing again.';}
+  if (err instanceof NoteNotFoundError) {return 'Unexpected error: note not found after creation.';}
+  if (err instanceof EnclosedApiError) {return `Enclosed API error: ${err.message}`;}
   return 'An unexpected error occurred while sharing.';
 }

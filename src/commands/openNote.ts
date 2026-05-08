@@ -14,24 +14,24 @@ export function parseNoteUrl(raw: string): { noteId: string; baseKey: string } |
   }
 
   const noteId = url.pathname.split('/').filter(Boolean).pop();
-  if (!noteId) return null;
+  if (!noteId) {return null;}
 
   const hashFragment = url.hash.replace(/^#/, '');
-  if (!hashFragment) return null;
+  if (!hashFragment) {return null;}
 
   const segments = hashFragment.split(':');
   const baseKey = segments.pop();
-  if (!baseKey) return null;
+  if (!baseKey) {return null;}
 
   const validPrefixes = new Set(['pw', 'dar']);
-  if (segments.some(s => !validPrefixes.has(s))) return null;
+  if (segments.some(s => !validPrefixes.has(s))) {return null;}
 
   return { noteId, baseKey };
 }
 
 export async function openNoteCommand(): Promise<void> {
   const raw = await promptNoteUrl();
-  if (!raw) return;
+  if (!raw) {return;}
 
   const parsed = parseNoteUrl(raw);
   if (!parsed) {
@@ -55,7 +55,7 @@ export async function openNoteCommand(): Promise<void> {
   let password = '';
   if (note.isPasswordProtected) {
     const input = await promptPassword();
-    if (input === undefined) return;
+    if (input === undefined) {return;}
     password = input;
   }
 
@@ -74,8 +74,8 @@ export async function openNoteCommand(): Promise<void> {
 }
 
 function openErrorMessage(err: unknown): string {
-  if (err instanceof NoteNotFoundError) return 'Note not found. It may have expired or already been read.';
-  if (err instanceof RateLimitError) return 'Too many requests. Please wait before trying again.';
-  if (err instanceof EnclosedApiError) return `Enclosed API error: ${err.message}`;
+  if (err instanceof NoteNotFoundError) {return 'Note not found. It may have expired or already been read.';}
+  if (err instanceof RateLimitError) {return 'Too many requests. Please wait before trying again.';}
+  if (err instanceof EnclosedApiError) {return `Enclosed API error: ${err.message}`;}
   return 'An unexpected error occurred while fetching the note.';
 }
