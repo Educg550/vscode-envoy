@@ -57,12 +57,18 @@ export class EnclosedClient {
     }
 
     const data = (await response.json()) as {
-      note: { payload: string; encryptionAlgorithm: string; serializationFormat: string };
+      note: {
+        payload: string;
+        encryptionAlgorithm: string;
+        serializationFormat: string;
+        isPasswordProtected?: boolean;
+      };
     };
     return {
       encryptedPayload: data.note.payload,
       encryptionAlgorithm: data.note.encryptionAlgorithm,
       serializationFormat: data.note.serializationFormat,
+      isPasswordProtected: data.note.isPasswordProtected ?? false,
     };
   }
 

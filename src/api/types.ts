@@ -8,4 +8,5 @@ export interface FetchNoteResult {
   encryptedPayload: string;
   encryptionAlgorithm: string;
   serializationFormat: string;
+  isPasswordProtected: boolean;
 }

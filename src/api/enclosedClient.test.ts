@@ -75,13 +75,14 @@ describe('EnclosedClient', () => {
   });
 
   describe('fetchNote', () => {
-    it('maps note.payload to encryptedPayload', async () => {
+    it('maps note fields including isPasswordProtected', async () => {
       vi.spyOn(globalThis, 'fetch').mockResolvedValue(
         makeFetchResponse(200, {
           note: {
             payload: 'iv:ciphertext',
             encryptionAlgorithm: 'aes-256-gcm',
             serializationFormat: 'cbor-array',
+            isPasswordProtected: true,
           },
         }),
       );
@@ -91,6 +92,22 @@ describe('EnclosedClient', () => {
       expect(result.encryptedPayload).toBe('iv:ciphertext');
       expect(result.encryptionAlgorithm).toBe('aes-256-gcm');
       expect(result.serializationFormat).toBe('cbor-array');
+      expect(result.isPasswordProtected).toBe(true);
+    });
+
+    it('defaults isPasswordProtected to false when absent from response', async () => {
+      vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+        makeFetchResponse(200, {
+          note: {
+            payload: 'iv:ct',
+            encryptionAlgorithm: 'aes-256-gcm',
+            serializationFormat: 'cbor-array',
+          },
+        }),
+      );
+
+      const result = await client.fetchNote('note-id-2');
+      expect(result.isPasswordProtected).toBe(false);
     });
 
     it('throws NoteNotFoundError on 404', async () => {
