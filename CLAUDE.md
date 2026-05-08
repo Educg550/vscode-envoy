@@ -53,9 +53,9 @@ src/
     └── settings.ts       # Reads enclosed.instanceUrl, defaultTtl, deleteAfterReading
 ```
 
-**Data flow (send):** file content → encrypt (AES-GCM) → POST to Enclosed API → assemble link `{instanceUrl}/#noteId/baseKey` → copy to clipboard.
+**Data flow (send):** file content → encrypt (AES-GCM) → POST to Enclosed API → assemble link `{instanceUrl}/{noteId}#{[pw:][dar:]baseKey}` → copy to clipboard.
 
-**Data flow (receive):** paste link → extract noteId + baseKey from URL fragment → GET encrypted note → PBKDF2 derive key → AES-GCM decrypt locally → open untitled editor.
+**Data flow (receive):** paste link → extract noteId from URL **path** and baseKey from URL **fragment** (strip optional `pw:` / `dar:` flag prefixes, key is always the last colon-separated segment) → GET encrypted note → PBKDF2 derive key → AES-GCM decrypt locally → open untitled editor.
 
 The `baseKey` lives only in the URL fragment — never sent to the server. All crypto uses `crypto.subtle` (Web Crypto API, no external deps).
 
