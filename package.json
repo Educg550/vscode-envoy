@@ -28,14 +28,14 @@
     "commands": [
       {
         "command": "enclosed.shareFile",
-        "title": "Share securely with Enclosed",
-        "category": "Enclosed",
+        "title": "Share Securely",
+        "category": "Envoy",
         "icon": "$(shield)"
       },
       {
         "command": "enclosed.openNote",
-        "title": "Open Enclosed Note",
-        "category": "Enclosed"
+        "title": "Open Note",
+        "category": "Envoy"
       }
     ],
     "menus": {
@@ -54,7 +54,7 @@
       ]
     },
     "configuration": {
-      "title": "Enclosed",
+      "title": "Envoy",
       "properties": {
         "enclosed.instanceUrl": {
           "type": "string",

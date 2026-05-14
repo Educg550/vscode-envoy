@@ -49,7 +49,7 @@ export async function promptShareOptions(
   if (!ttlAndDar) { return undefined; }
 
   const passwordInput = await vscode.window.showInputBox({
-    title: 'Share with Enclosed',
+    title: 'Share with Envoy',
     prompt: 'Password (leave empty for no password)',
     password: true,
   });
@@ -71,7 +71,7 @@ async function promptTtlAndDar(
     let dar = initialDar;
     let settled = false;
 
-    picker.title = 'Share with Enclosed';
+    picker.title = 'Share with Envoy';
     picker.placeholder = 'Select expiration time';
     picker.items = buildTtlItems(defaultTtl, dar);
 

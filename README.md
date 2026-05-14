@@ -15,7 +15,7 @@ all without leaving VS Code.
 3. An encrypted link is copied to your clipboard, ready to share
 
 **Receiver** (your teammate):
-1. Open the Command Palette, run **Open Enclosed Note**
+1. Open the Command Palette, run **Envoy: Open Note**
 2. Paste the link, enter the password if prompted
 3. The decrypted content opens as an untitled file, never auto-saved
 
@@ -39,13 +39,13 @@ as the Enclosed web app.
 | `enclosed.defaultTtl` | `86400` (1 day) | Default link expiration, in seconds |
 | `enclosed.defaultDeleteAfterReading` | `true` | Destroy note after first read |
 
-Access via **Settings → Extensions → Enclosed** or add to your `settings.json`.
+Access via **Settings → Extensions → Envoy** or add to your `settings.json`.
 
 ## Self-hosting
 
 To point Envoy to your own Enclosed instance:
 
-1. Open **Settings → Extensions → Enclosed → Instance URL**
+1. Open **Settings → Extensions → Envoy → Instance URL**
 2. Set it to your instance, e.g. `https://notes.mycompany.com`
 
 For self-hosting Enclosed itself, see the [Enclosed documentation](https://github.com/CorentinTh/enclosed).

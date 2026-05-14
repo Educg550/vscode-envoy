@@ -36,7 +36,7 @@ export async function openNoteCommand(): Promise<void> {
   const parsed = parseNoteUrl(raw);
   if (!parsed) {
     vscode.window.showErrorMessage(
-      'Could not parse the Enclosed link. Expected format: https://enclosed.cc/noteId#encryptionKey',
+      'Could not parse the Envoy link. Expected format: https://enclosed.cc/noteId#encryptionKey',
     );
     return;
   }

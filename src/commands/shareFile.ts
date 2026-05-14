@@ -20,7 +20,7 @@ export async function shareFileCommand(uri?: vscode.Uri): Promise<void> {
 
   if (!validateInstanceUrl(settings.instanceUrl)) {
     vscode.window.showErrorMessage(
-      `Invalid Enclosed instance URL: "${settings.instanceUrl}". Update it in Settings → Extensions → Enclosed.`,
+      `Invalid Enclosed instance URL: "${settings.instanceUrl}". Update it in Settings → Extensions → Envoy.`,
     );
     return;
   }
@@ -74,11 +74,11 @@ export async function shareFileCommand(uri?: vscode.Uri): Promise<void> {
   const link = `${baseUrl}/${encodeURIComponent(noteId)}#${hashFragment}`;
 
   await vscode.env.clipboard.writeText(link);
-  vscode.window.showInformationMessage('Enclosed link copied to clipboard.');
+  vscode.window.showInformationMessage('Envoy link copied to clipboard.');
 }
 
 function shareErrorMessage(err: unknown): string {
-  if (err instanceof PayloadTooLargeError) {return 'File is too large to share via Enclosed.';}
+  if (err instanceof PayloadTooLargeError) {return 'File is too large to share via Envoy.';}
   if (err instanceof RateLimitError) {return 'Too many requests. Please wait before sharing again.';}
   if (err instanceof NoteNotFoundError) {return 'Unexpected error: note not found after creation.';}
   if (err instanceof EnclosedApiError) {return `Enclosed API error: ${err.message}`;}

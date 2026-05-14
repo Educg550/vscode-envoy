@@ -39,7 +39,7 @@ src/
 ├── extension.ts          # Entry point — registers all commands
 ├── commands/
 │   ├── shareFile.ts      # "Share securely" — right-click on .env in Explorer
-│   └── openNote.ts       # "Open Enclosed Note" — Command Palette, paste URL
+│   └── openNote.ts       # "Envoy: Open Note" — Command Palette, paste URL
 ├── crypto/
 │   ├── keys.ts           # Random baseKey via crypto.getRandomValues
 │   ├── encrypt.ts        # PBKDF2(baseKey+password) → AES-GCM 256 encrypt
