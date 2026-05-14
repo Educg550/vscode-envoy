@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-05-14
+
+### Added
+
+- Delete-after-reading can now be toggled directly in the share panel before sending a note, without changing the default setting
+
+### Changed
+
+- All extension labels, commands, and notifications now say "Envoy" instead of "Enclosed".
+  This is primarily a product decision, as infraestructure still uses the main `enclosed.cc` instance as default.
+
 ## [0.2.0] — 2026-05-14
 
 ### Fixed
