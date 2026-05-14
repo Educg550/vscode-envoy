@@ -1,3 +1,4 @@
+import { encode } from 'cbor-x';
 import { base64UrlToBuf, bufToBase64Url, deriveMasterKey } from './codec';
 
 export interface EncryptResult {
@@ -13,8 +14,8 @@ export async function encryptContent(
   const masterKey = await deriveMasterKey(baseKeyBuf, password);
 
   const iv = crypto.getRandomValues(new Uint8Array(12));
-  const plaintextBuf = new TextEncoder().encode(plaintext);
-  const ciphertextBuf = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, masterKey, plaintextBuf);
+  const noteBuffer = encode([plaintext, []]);
+  const ciphertextBuf = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, masterKey, noteBuffer);
 
   const encryptedPayload = `${bufToBase64Url(iv)}:${bufToBase64Url(new Uint8Array(ciphertextBuf))}`;
   return { encryptedPayload };

@@ -1,3 +1,4 @@
+import { decode } from 'cbor-x';
 import { base64UrlToBuf, deriveMasterKey } from './codec';
 
 export async function decryptContent(
@@ -22,5 +23,6 @@ export async function decryptContent(
   const ciphertext = base64UrlToBuf(ciphertextStr);
 
   const plaintextBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, masterKey, ciphertext);
-  return new TextDecoder().decode(plaintextBuf);
+  const [content] = decode(new Uint8Array(plaintextBuf)) as [string];
+  return content;
 }
