@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "Node16",
+    "module": "preserve",
     "target": "ES2022",
     "outDir": "dist",
     "lib": ["ES2022"],
@@ -10,7 +10,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    "moduleResolution": "Node16",
+    "moduleResolution": "bundler",
     "skipLibCheck": true
   },
   "include": ["src"],
