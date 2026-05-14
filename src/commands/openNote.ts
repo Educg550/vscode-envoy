@@ -5,7 +5,7 @@ import { EnclosedApiError, NoteNotFoundError, RateLimitError } from '../api/erro
 import { getSettings } from '../config/settings';
 import { promptNoteUrl, promptPassword } from '../ui/receivePanel';
 
-export function parseNoteUrl(raw: string): { noteId: string; baseKey: string } | null {
+export function parseNoteUrl(raw: string): { noteId: string; baseKey: string; isPasswordProtected: boolean } | null {
   let url: URL;
   try {
     url = new URL(raw.trim());
@@ -26,7 +26,7 @@ export function parseNoteUrl(raw: string): { noteId: string; baseKey: string } |
   const validPrefixes = new Set(['pw', 'dar']);
   if (segments.some(s => !validPrefixes.has(s))) {return null;}
 
-  return { noteId, baseKey };
+  return { noteId, baseKey, isPasswordProtected: segments.includes('pw') };
 }
 
 export async function openNoteCommand(): Promise<void> {
@@ -53,7 +53,7 @@ export async function openNoteCommand(): Promise<void> {
   }
 
   let password = '';
-  if (note.isPasswordProtected) {
+  if (note.isPasswordProtected || parsed.isPasswordProtected) {
     const input = await promptPassword();
     if (input === undefined) {return;}
     password = input;

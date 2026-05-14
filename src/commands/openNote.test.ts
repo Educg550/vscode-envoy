@@ -11,6 +11,7 @@ describe('parseNoteUrl', () => {
     expect(parseNoteUrl('https://enclosed.cc/abc123#xyz789')).toEqual({
       noteId: 'abc123',
       baseKey: 'xyz789',
+      isPasswordProtected: false,
     });
   });
 
@@ -18,6 +19,7 @@ describe('parseNoteUrl', () => {
     expect(parseNoteUrl('https://enclosed.cc/abc123#pw:xyz789')).toEqual({
       noteId: 'abc123',
       baseKey: 'xyz789',
+      isPasswordProtected: true,
     });
   });
 
@@ -25,6 +27,7 @@ describe('parseNoteUrl', () => {
     expect(parseNoteUrl('https://enclosed.cc/abc123#dar:xyz789')).toEqual({
       noteId: 'abc123',
       baseKey: 'xyz789',
+      isPasswordProtected: false,
     });
   });
 
@@ -32,6 +35,7 @@ describe('parseNoteUrl', () => {
     expect(parseNoteUrl('https://enclosed.cc/abc123#pw:dar:xyz789')).toEqual({
       noteId: 'abc123',
       baseKey: 'xyz789',
+      isPasswordProtected: true,
     });
   });
 
@@ -39,6 +43,7 @@ describe('parseNoteUrl', () => {
     expect(parseNoteUrl('https://myinstance.example.com/abc123#xyz789')).toEqual({
       noteId: 'abc123',
       baseKey: 'xyz789',
+      isPasswordProtected: false,
     });
   });
 
@@ -47,6 +52,7 @@ describe('parseNoteUrl', () => {
     expect(result).toEqual({
       noteId: '01kr4jxqyphgazrb0798w0s4xg',
       baseKey: 'm774Mgqp---SY7Vx1L4MG5wto7It1v_kQLknwpob6l0',
+      isPasswordProtected: false,
     });
   });
 
