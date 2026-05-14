@@ -69,6 +69,7 @@ async function promptTtlAndDar(
   return new Promise(resolve => {
     const picker = vscode.window.createQuickPick();
     let dar = initialDar;
+    let settled = false;
 
     picker.title = 'Share with Enclosed';
     picker.placeholder = 'Select expiration time';
@@ -83,6 +84,7 @@ async function promptTtlAndDar(
         return;
       }
       if ('seconds' in item) {
+        settled = true;
         resolve({ ttl: (item as TtlItem).seconds, deleteAfterReading: dar });
         picker.hide();
       }
@@ -90,7 +92,7 @@ async function promptTtlAndDar(
 
     picker.onDidHide(() => {
       picker.dispose();
-      resolve(undefined);
+      if (!settled) { resolve(undefined); }
     });
 
     picker.show();
