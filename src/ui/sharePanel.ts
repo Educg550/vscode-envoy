@@ -43,29 +43,56 @@ export function buildTtlItems(
 
 export async function promptShareOptions(
   defaultTtl: number,
-  defaultDelete: boolean,
+  defaultDeleteAfterReading: boolean,
 ): Promise<ShareOptions | undefined> {
-  const items = TTL_OPTIONS.map(opt => ({
-    label: opt.seconds === defaultTtl ? `$(star) ${opt.label}` : opt.label,
-    seconds: opt.seconds,
-  }));
-
-  const picked = await vscode.window.showQuickPick(items, {
-    title: 'Share with Enclosed',
-    placeHolder: 'Select expiration time',
-  });
-  if (!picked) {return undefined;}
+  const ttlAndDar = await promptTtlAndDar(defaultTtl, defaultDeleteAfterReading);
+  if (!ttlAndDar) { return undefined; }
 
   const passwordInput = await vscode.window.showInputBox({
     title: 'Share with Enclosed',
     prompt: 'Password (leave empty for no password)',
     password: true,
   });
-  if (passwordInput === undefined) {return undefined;}
+  if (passwordInput === undefined) { return undefined; }
 
   return {
-    ttl: picked.seconds,
+    ttl: ttlAndDar.ttl,
     password: passwordInput,
-    deleteAfterReading: defaultDelete,
+    deleteAfterReading: ttlAndDar.deleteAfterReading,
   };
+}
+
+async function promptTtlAndDar(
+  defaultTtl: number,
+  initialDar: boolean,
+): Promise<{ ttl: number; deleteAfterReading: boolean } | undefined> {
+  return new Promise(resolve => {
+    const picker = vscode.window.createQuickPick();
+    let dar = initialDar;
+
+    picker.title = 'Share with Enclosed';
+    picker.placeholder = 'Select expiration time';
+    picker.items = buildTtlItems(defaultTtl, dar);
+
+    picker.onDidChangeSelection(items => {
+      const item = items[0];
+      if (!item) { return; }
+      if ('isToggle' in item) {
+        dar = !dar;
+        picker.items = buildTtlItems(defaultTtl, dar);
+        return;
+      }
+      if ('seconds' in item) {
+        resolve({ ttl: (item as TtlItem).seconds, deleteAfterReading: dar });
+        picker.hide();
+      }
+    });
+
+    picker.onDidHide(() => {
+      picker.dispose();
+      resolve(undefined);
+    });
+
+    picker.show();
+  });
 }
