@@ -13,6 +13,34 @@ const TTL_OPTIONS = [
   { label: '30 days', seconds: 2_592_000 },
 ] as const;
 
+type TtlItem    = vscode.QuickPickItem & { readonly seconds: number };
+type ToggleItem = vscode.QuickPickItem & { readonly isToggle: true };
+
+export function buildTtlItems(
+  defaultTtl: number,
+  deleteAfterReading: boolean,
+): vscode.QuickPickItem[] {
+  const ttlItems: TtlItem[] = TTL_OPTIONS.map(opt => ({
+    label: opt.seconds === defaultTtl ? `$(star) ${opt.label}` : opt.label,
+    seconds: opt.seconds,
+  }));
+
+  const separator: vscode.QuickPickItem = {
+    label: '',
+    kind: vscode.QuickPickItemKind.Separator,
+  };
+
+  const toggleItem: ToggleItem = {
+    label: deleteAfterReading ? '$(check) Delete after reading' : '$(circle-outline) Delete after reading',
+    description: deleteAfterReading
+      ? 'Note will be destroyed after it is opened'
+      : 'Note will persist until it expires',
+    isToggle: true,
+  };
+
+  return [...ttlItems, separator, toggleItem];
+}
+
 export async function promptShareOptions(
   defaultTtl: number,
   defaultDelete: boolean,
