@@ -6,8 +6,16 @@
   "engines": {
     "vscode": "^1.118.0"
   },
-  "categories": ["Other"],
-  "keywords": ["env", "secrets", "encrypted", "sharing", "enclosed"],
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "env",
+    "secrets",
+    "encrypted",
+    "sharing",
+    "enclosed"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Educg550/vscode-envoy.git"
