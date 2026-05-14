@@ -13,13 +13,13 @@ const TTL_OPTIONS = [
   { label: '30 days', seconds: 2_592_000 },
 ] as const;
 
-type TtlItem    = vscode.QuickPickItem & { readonly seconds: number };
-type ToggleItem = vscode.QuickPickItem & { readonly isToggle: true };
+export type TtlItem    = vscode.QuickPickItem & { readonly seconds: number };
+export type ToggleItem = vscode.QuickPickItem & { readonly isToggle: true };
 
 export function buildTtlItems(
   defaultTtl: number,
   deleteAfterReading: boolean,
-): vscode.QuickPickItem[] {
+): (TtlItem | vscode.QuickPickItem | ToggleItem)[] {
   const ttlItems: TtlItem[] = TTL_OPTIONS.map(opt => ({
     label: opt.seconds === defaultTtl ? `$(star) ${opt.label}` : opt.label,
     seconds: opt.seconds,
