@@ -15,6 +15,11 @@ bd show <id>          # View issue details
 bd update <id> --claim  # Claim work
 bd close <id>         # Complete work
 ```
+
+**Beads sync**: This project does NOT use `bd dolt push`. Issue state lives in `.beads/issues.jsonl` — commit it to git alongside code changes:
+```bash
+git add .beads/issues.jsonl && git commit -m "chore(beads): ..."
+```
 <!-- END BEADS INTEGRATION -->
 
 
