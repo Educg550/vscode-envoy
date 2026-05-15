@@ -29,11 +29,8 @@ export function parseNoteUrl(raw: string): { noteId: string; baseKey: string; is
   return { noteId, baseKey, isPasswordProtected: segments.includes('pw') };
 }
 
-export async function openNoteCommand(): Promise<void> {
-  const raw = await promptNoteUrl();
-  if (!raw) {return;}
-
-  const parsed = parseNoteUrl(raw);
+export async function openNoteFromUrl(url: string): Promise<void> {
+  const parsed = parseNoteUrl(url);
   if (!parsed) {
     vscode.window.showErrorMessage(
       'Could not parse the Envoy link. Expected format: https://enclosed.cc/noteId#encryptionKey',
@@ -71,6 +68,12 @@ export async function openNoteCommand(): Promise<void> {
 
   const doc = await vscode.workspace.openTextDocument({ content: plaintext, language: 'dotenv' });
   await vscode.window.showTextDocument(doc);
+}
+
+export async function openNoteCommand(): Promise<void> {
+  const raw = await promptNoteUrl();
+  if (!raw) {return;}
+  await openNoteFromUrl(raw);
 }
 
 function openErrorMessage(err: unknown): string {
