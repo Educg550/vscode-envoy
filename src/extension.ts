@@ -4,8 +4,8 @@ import { openNoteCommand, openNoteFromUrl } from './commands/openNote';
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
-    vscode.commands.registerCommand('enclosed.shareFile', (uri?: vscode.Uri) => shareFileCommand(uri, context)),
-    vscode.commands.registerCommand('enclosed.openNote', openNoteCommand),
+    vscode.commands.registerCommand('envoy.shareFile', (uri?: vscode.Uri) => shareFileCommand(uri, context)),
+    vscode.commands.registerCommand('envoy.openNote', openNoteCommand),
     vscode.window.registerUriHandler({
       handleUri(uri: vscode.Uri): void {
         if (uri.path === '/open') {

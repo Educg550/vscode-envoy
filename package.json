@@ -27,13 +27,13 @@
   "contributes": {
     "commands": [
       {
-        "command": "enclosed.shareFile",
+        "command": "envoy.shareFile",
         "title": "Share Securely",
         "category": "Envoy",
         "icon": "$(shield)"
       },
       {
-        "command": "enclosed.openNote",
+        "command": "envoy.openNote",
         "title": "Open Note",
         "category": "Envoy"
       }
@@ -41,13 +41,13 @@
     "menus": {
       "explorer/context": [
         {
-          "command": "enclosed.shareFile",
+          "command": "envoy.shareFile",
           "when": "resourceExtname == .env || resourceFilename =~ /\\.env/"
         }
       ],
       "editor/title": [
         {
-          "command": "enclosed.shareFile",
+          "command": "envoy.shareFile",
           "when": "resourceExtname == .env || resourceFilename =~ /\\.env/",
           "group": "navigation"
         }
