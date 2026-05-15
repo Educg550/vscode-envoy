@@ -55,7 +55,7 @@ src/
 │   ├── sharePanel.ts     # Quick Pick for TTL / password / delete-after-read
 │   └── receivePanel.ts   # Input Box for URL + optional password prompt
 └── config/
-    └── settings.ts       # Reads enclosed.instanceUrl, defaultTtl, deleteAfterReading
+    └── settings.ts       # Reads envoy.enclosedInstanceUrl, defaultTtl, defaultDeleteAfterReading, shouldCopyEnclosedUrl
 ```
 
 **Data flow (send):** file content → encrypt (AES-GCM) → POST to Enclosed API → assemble link `{instanceUrl}/{noteId}#{[pw:][dar:]baseKey}` → copy to clipboard.

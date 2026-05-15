@@ -35,9 +35,10 @@ as the Enclosed web app.
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `enclosed.instanceUrl` | `https://enclosed.cc` | Enclosed instance to use |
-| `enclosed.defaultTtl` | `86400` (1 day) | Default link expiration, in seconds |
-| `enclosed.defaultDeleteAfterReading` | `true` | Destroy note after first read |
+| `envoy.enclosedInstanceUrl` | `https://enclosed.cc` | Enclosed instance to use |
+| `envoy.defaultTtl` | `86400` (1 day) | Default link expiration, in seconds |
+| `envoy.defaultDeleteAfterReading` | `true` | Destroy note after first read |
+| `envoy.shouldCopyEnclosedUrl` | `true` | Copy web link to clipboard; disable to copy VS Code deep link instead |
 
 Access via **Settings → Extensions → Envoy** or add to your `settings.json`.
 
@@ -45,7 +46,7 @@ Access via **Settings → Extensions → Envoy** or add to your `settings.json`.
 
 To point Envoy to your own Enclosed instance:
 
-1. Open **Settings → Extensions → Envoy → Instance URL**
+1. Open **Settings → Extensions → Envoy → Instance URL** (`envoy.enclosedInstanceUrl`)
 2. Set it to your instance, e.g. `https://notes.mycompany.com`
 
 For self-hosting Enclosed itself, see the [Enclosed documentation](https://github.com/CorentinTh/enclosed).

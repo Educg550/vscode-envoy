@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Receivers can now open an Envoy note directly from a `vscode://` deep link — no Command Palette required. The link is available via the "Copy VS Code link" button in the share notification
+- New setting `envoy.shouldCopyEnclosedUrl` (default `true`): controls whether the web link or the VS Code deep link is copied to clipboard when sharing
+
+### Changed — Breaking
+
+- All extension settings have been renamed from `enclosed.*` to `envoy.*`:
+  - `enclosed.instanceUrl` → `envoy.enclosedInstanceUrl`
+  - `enclosed.defaultTtl` → `envoy.defaultTtl`
+  - `enclosed.defaultDeleteAfterReading` → `envoy.defaultDeleteAfterReading`
+
+  Users with custom values in `settings.json` must rename these keys manually.
+
 ## [0.3.0] — 2026-05-14
 
 ### Added
