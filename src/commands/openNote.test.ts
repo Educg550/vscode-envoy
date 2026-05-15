@@ -76,3 +76,23 @@ describe('parseNoteUrl', () => {
     expect(parseNoteUrl('https://enclosed.cc/abc123#unknown:xyz789')).toBeNull();
   });
 });
+
+describe('deep link URI encoding round-trip', () => {
+  it('preserves a plain Enclosed link through encodeURIComponent / URLSearchParams', () => {
+    const original = 'https://enclosed.cc/abc123#xyz789';
+    const decoded = new URLSearchParams(`url=${encodeURIComponent(original)}`).get('url');
+    expect(decoded).toBe(original);
+  });
+
+  it('preserves fragment with pw: and dar: flags', () => {
+    const original = 'https://enclosed.cc/abc123#pw:dar:xyz789';
+    const decoded = new URLSearchParams(`url=${encodeURIComponent(original)}`).get('url');
+    expect(decoded).toBe(original);
+  });
+
+  it('preserves a link from a custom instance', () => {
+    const original = 'https://notes.mycompany.com/note456#someBaseKey';
+    const decoded = new URLSearchParams(`url=${encodeURIComponent(original)}`).get('url');
+    expect(decoded).toBe(original);
+  });
+});
