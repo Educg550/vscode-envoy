@@ -1,23 +1,28 @@
 # Envoy
 
+<p align="center"><img src="images/logotype.png" width="600" alt="Envoy" /></p>
+
 **Share `.env` files securely, no browser, no copy-paste.**
 
 Envoy encrypts your credentials end-to-end and turns them into a one-time link,
 all without leaving VS Code.
 
-![Envoy sender demo](images/demo-sender.gif)
+<!-- ![Envoy sender demo](images/demo-sender.gif) -->
 
 ## How it works
 
 **Sender** (you):
+
 1. Right-click any `.env` file in the Explorer
-2. Pick expiration time and an optional password
-3. An encrypted link is copied to your clipboard, ready to share
+2. Pick expiration time, toggle delete-after-reading, and set an optional password
+3. An encrypted link is copied to your clipboard, web link or VS Code deep link
 
 **Receiver** (your teammate):
-1. Open the Command Palette, run **Envoy: Open Note**
-2. Paste the link, enter the password if prompted
-3. The decrypted content opens as an untitled file, never auto-saved
+
+- **VS Code deep link**: click the `vscode://` link to open the note directly, no Command Palette needed
+- **Web link**: run **Envoy: Open Note** from the Command Palette, paste the URL, enter the password if prompted
+
+The decrypted content opens as an untitled file, never auto-saved.
 
 > No Envoy? No problem, the link also works in any browser at [enclosed.cc](https://enclosed.cc).
 
@@ -33,12 +38,12 @@ as the Enclosed web app.
 
 ## Configuration
 
-| Setting | Default | Description |
-|---------|---------|-------------|
-| `envoy.enclosedInstanceUrl` | `https://enclosed.cc` | Enclosed instance to use |
-| `envoy.defaultTtl` | `86400` (1 day) | Default link expiration, in seconds |
-| `envoy.defaultDeleteAfterReading` | `true` | Destroy note after first read |
-| `envoy.shouldCopyEnclosedUrl` | `true` | Copy web link to clipboard; disable to copy VS Code deep link instead |
+| Setting                           | Default               | Description                                                           |
+| --------------------------------- | --------------------- | --------------------------------------------------------------------- |
+| `envoy.enclosedInstanceUrl`       | `https://enclosed.cc` | Enclosed instance to use                                              |
+| `envoy.defaultTtl`                | `86400` (1 day)       | Default link expiration, in seconds                                   |
+| `envoy.defaultDeleteAfterReading` | `true`                | Destroy note after first read                                         |
+| `envoy.shouldCopyEnclosedUrl`     | `true`                | Copy web link to clipboard; disable to copy VS Code deep link instead |
 
 Access via **Settings → Extensions → Envoy** or add to your `settings.json`.
 
