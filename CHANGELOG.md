@@ -4,7 +4,7 @@ All notable changes to the Envoy extension will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
+## [1.0.0] — 2026-05-15
 
 ### Added
 
@@ -13,7 +13,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — Breaking
 
-- All extension settings have been renamed from `enclosed.*` to `envoy.*`:
+- **Command IDs renamed**: All extension commands have been renamed from `enclosed.*` to `envoy.*`:
+  - `enclosed.shareFile` → `envoy.shareFile`
+  - `enclosed.openNote` → `envoy.openNote`
+
+  If you have these commands bound to custom keyboard shortcuts, you must update your keybindings.
+
+- **Settings renamed**: All extension settings have been renamed from `enclosed.*` to `envoy.*`:
   - `enclosed.instanceUrl` → `envoy.enclosedInstanceUrl`
   - `enclosed.defaultTtl` → `envoy.defaultTtl`
   - `enclosed.defaultDeleteAfterReading` → `envoy.defaultDeleteAfterReading`
