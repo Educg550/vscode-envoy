@@ -73,8 +73,24 @@ export async function shareFileCommand(uri: vscode.Uri | undefined, context: vsc
   const hashFragment = [...flags, baseKey].join(':');
   const link = `${baseUrl}/${encodeURIComponent(noteId)}#${hashFragment}`;
 
-  await vscode.env.clipboard.writeText(link);
-  vscode.window.showInformationMessage('Envoy link copied to clipboard.');
+  const deepLink = `${vscode.env.uriScheme}://${context.extension.id}/open?url=${encodeURIComponent(link)}`;
+  const copyEnclosed = settings.shouldCopyEnclosedUrl;
+
+  await vscode.env.clipboard.writeText(copyEnclosed ? link : deepLink);
+  const action = await vscode.window.showInformationMessage(
+    copyEnclosed
+      ? 'Envoy link copied to clipboard.'
+      : 'VS Code link copied. The receiver needs Envoy installed to open it.',
+    copyEnclosed ? 'Copy VS Code link' : 'Copy web link',
+  );
+  if (action) {
+    await vscode.env.clipboard.writeText(copyEnclosed ? deepLink : link);
+    vscode.window.showInformationMessage(
+      copyEnclosed
+        ? 'VS Code link copied. The receiver needs Envoy installed to open it.'
+        : 'Web link copied.',
+    );
+  }
 }
 
 function shareErrorMessage(err: unknown): string {
