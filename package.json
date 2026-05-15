@@ -21,7 +21,7 @@
     "url": "https://github.com/Educg550/vscode-envoy.git"
   },
   "icon": "images/icon.png",
-  "publisher": "<publisher-id>",
+  "publisher": "eduardo-guedes",
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
@@ -56,20 +56,25 @@
     "configuration": {
       "title": "Envoy",
       "properties": {
-        "enclosed.instanceUrl": {
+        "envoy.enclosedInstanceUrl": {
           "type": "string",
           "default": "https://enclosed.cc",
           "description": "URL of the Enclosed instance to use"
         },
-        "enclosed.defaultTtl": {
+        "envoy.defaultTtl": {
           "type": "number",
           "default": 86400,
           "description": "Default TTL in seconds for new notes"
         },
-        "enclosed.defaultDeleteAfterReading": {
+        "envoy.defaultDeleteAfterReading": {
           "type": "boolean",
           "default": true,
           "description": "Delete note after first read by default"
+        },
+        "envoy.shouldCopyEnclosedUrl": {
+          "type": "boolean",
+          "default": true,
+          "description": "Copy the web link (https://) to clipboard when sharing. Disable to copy the VS Code deep link (vscode://) instead."
         }
       }
     }
