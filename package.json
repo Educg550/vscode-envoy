@@ -1,6 +1,6 @@
 {
-  "name": "envoy",
-  "displayName": "Envoy",
+  "name": "vscode-envoy",
+  "displayName": "Envoy - Secure .env sharing",
   "description": "Share .env files securely via Enclosed — end-to-end encrypted, ephemeral links inside VS Code",
   "version": "1.0.0",
   "engines": {
