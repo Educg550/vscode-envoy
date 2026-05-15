@@ -15,7 +15,7 @@ export function validateInstanceUrl(url: string): boolean {
   }
 }
 
-export async function shareFileCommand(uri?: vscode.Uri): Promise<void> {
+export async function shareFileCommand(uri: vscode.Uri | undefined, context: vscode.ExtensionContext): Promise<void> {
   const settings = getSettings();
 
   if (!validateInstanceUrl(settings.instanceUrl)) {
