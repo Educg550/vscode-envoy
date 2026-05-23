@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability
+    url: https://marketplace.visualstudio.com/items?itemName=eduardo-guedes.vscode-envoy
+    about: Please email the maintainer privately. DO NOT open a public issue. See the Security section in CONTRIBUTING.md.

@@ -3,6 +3,8 @@
 .beads/**
 .claude/**
 .git/**
+.github/**
+CONTRIBUTING.md
 .gitignore
 .env
 .env.*
