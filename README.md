@@ -7,17 +7,19 @@
 Envoy encrypts your credentials end-to-end and turns them into a one-time link,
 all without leaving VS Code.
 
-<!-- ![Envoy sender demo](images/demo-sender.gif) -->
-
 ## How it works
 
 **Sender** (you):
+
+![Envoy sender demo](images/demo-sender.gif)
 
 1. Right-click any `.env` file in the Explorer
 2. Pick expiration time, toggle delete-after-reading, and set an optional password
 3. An encrypted link is copied to your clipboard, web link or VS Code deep link
 
 **Receiver** (your teammate):
+
+![Envoy receiver demo](images/demo-receiver.gif)
 
 - **VS Code deep link**: click the `vscode://` link to open the note directly, no Command Palette needed
 - **Web link**: run **Envoy: Open Note** from the Command Palette, paste the URL, enter the password if prompted
