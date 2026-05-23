@@ -4,6 +4,8 @@
 .claude/**
 .git/**
 .gitignore
+.env
+.env.*
 src/**
 esbuild.js
 eslint.config.mjs

@@ -4,6 +4,16 @@ All notable changes to the Envoy extension will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.0.2] — 2026-05-23
+
+### Added
+
+- Animated demos of the sender and receiver flows in the README, so new users can see the full sharing experience at a glance
+
+### Changed
+
+- Logo and icon updated for better visibility on light-themed Marketplace and README backgrounds
+
 ## [1.0.1] — 2026-05-15
 
 ### Added
