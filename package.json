@@ -73,8 +73,8 @@
         },
         "envoy.shouldCopyEnclosedUrl": {
           "type": "boolean",
-          "default": true,
-          "description": "Copy the web link (https://) to clipboard when sharing. Disable to copy the VS Code deep link (vscode://) instead."
+          "default": false,
+          "description": "Copy the web link (https://) to clipboard when sharing. When enabled, recipients who open the link in a browser run decryption code served by the Enclosed instance. Leave disabled to copy the VS Code deep link (vscode://), which keeps decryption inside the extension."
         }
       }
     }

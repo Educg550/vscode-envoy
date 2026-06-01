@@ -38,6 +38,21 @@ The decrypted content opens as an untitled file, never auto-saved.
 Envoy uses AES-256-GCM encryption with PBKDF2 key derivation, the same parameters
 as the Enclosed web app.
 
+### A note on trust
+
+Encryption and decryption happen inside Envoy using the VS Code runtime's native
+Web Crypto, so the instance (enclosed.cc by default) only ever stores an encrypted
+blob, it cannot read your file.
+
+That guarantee holds as long as both sides use Envoy. **If a recipient opens a
+_web_ link in a browser instead, they download and run decryption JavaScript served
+by the instance.** A compromised or malicious instance could serve code that
+exfiltrates the key from the link fragment, this is an inherent limitation of any
+browser-based "client-side" encryption, not specific to Envoy. For this reason
+Envoy copies the **VS Code deep link by default**, keeping decryption inside the
+extension. Enable `envoy.shouldCopyEnclosedUrl` only when you accept that trust
+trade-off, or [self-host](#self-hosting) the instance so the served code is yours.
+
 ## Configuration
 
 | Setting                           | Default               | Description                                                           |
@@ -45,7 +60,7 @@ as the Enclosed web app.
 | `envoy.enclosedInstanceUrl`       | `https://enclosed.cc` | Enclosed instance to use                                              |
 | `envoy.defaultTtl`                | `86400` (1 day)       | Default link expiration, in seconds                                   |
 | `envoy.defaultDeleteAfterReading` | `true`                | Destroy note after first read                                         |
-| `envoy.shouldCopyEnclosedUrl`     | `true`                | Copy web link to clipboard; disable to copy VS Code deep link instead |
+| `envoy.shouldCopyEnclosedUrl`     | `false`               | Copy VS Code deep link to clipboard; enable to copy the web link instead |
 
 Access via **Settings → Extensions → Envoy** or add to your `settings.json`.
 

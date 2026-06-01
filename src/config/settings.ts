@@ -13,6 +13,6 @@ export function getSettings(): EnclosedSettings {
     instanceUrl: cfg.get<string>('enclosedInstanceUrl', 'https://enclosed.cc'),
     defaultTtl: cfg.get<number>('defaultTtl', 86400),
     defaultDeleteAfterReading: cfg.get<boolean>('defaultDeleteAfterReading', true),
-    shouldCopyEnclosedUrl: cfg.get<boolean>('shouldCopyEnclosedUrl', true),
+    shouldCopyEnclosedUrl: cfg.get<boolean>('shouldCopyEnclosedUrl', false),
   };
 }
