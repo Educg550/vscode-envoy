@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.0.3] — 2026-06-02
+
 ### Changed
 
 - Sharing now copies the VS Code deep link by default instead of the web link, so decryption stays inside the extension. Opening a web link in a browser instead runs decryption code served by the Enclosed instance, which you then have to trust. Re-enable the web link via `envoy.shouldCopyEnclosedUrl`. See the README "A note on trust" section.
